@@ -47,14 +47,14 @@ class Board():
   
     def finalScore(self,bingoList):
         boardEmpty = []
-        indexOflastNum = bingoList.index(lastNum) 
-        bingoList = bingo[:indexOflastNum+1]
+        indexOflastNum = bingoList.index(self._lastNum) 
+        bingoList = bingoList[:indexOflastNum+1]
         for row in self.board:
             newRow = list(filter(lambda x:not(x in bingoList), row))
             boardEmpty.append(newRow)
         totalSum = [sum(row) for row in boardEmpty]
         totalSum = sum(totalSum)
-        return  totalSum*data[1]
+        return  totalSum*self._lastNum
 
 def checkBoards(num,_boards):
     boardsWithNum = []
@@ -73,7 +73,7 @@ def getFirstFull(board,nums):
     lastNum = 0
     #Create board coordinates dict
     for row in range(len(board.board)):
-        for col in range(row):
+        for col in range(len(board.board[row])):
             num = board.board[row][col]
             numXY[num] = [row,col]
     #check list winner
