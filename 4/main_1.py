@@ -105,7 +105,15 @@ def getWinner(fulls,bingoList):
             winnerIndex = indexOfLastNum
             winner = full
     return fulls[winner]
-
+def getLastWinner(fulls,bingoList):
+    lastWinnerIndex = -1
+    lastWinner = 0
+    for full in range(len(fulls)):
+        indexOfLastNum = bingoList.index(fulls[full].lastNum)
+        if indexOfLastNum > lastWinnerIndex :
+            lastWinnerIndex = indexOfLastNum
+            lastWinner = full
+    return fulls[lastWinner]
 
 def bingo(data):
     bingoNumber = {}
@@ -127,14 +135,16 @@ def bingo(data):
         fulls = getFirstFull(newBoard,value)
         bingoFulls.append(fulls)
     winner = getWinner(bingoFulls,data)
+    lastWinner = getLastWinner(bingoFulls,data)
     print(f"Winner:")
     print(pd.DataFrame(winner.board))
     print(f"With the full:{winner.bingo}")
-    return winner
+    return winner,lastWinner
     
 
 
 if __name__ == "__main__":
-    winner = bingo(bingoInput)
-    score = winner.finalScore(bingoInput) 
-    print(f"Score:{score}")
+    winner,lastWinner = bingo(bingoInput)
+    scoreW = winner.finalScore(bingoInput) 
+    scoreLW = lastWinner.finalScore(bingoInput)
+    print(f"Winner:{scoreW}\nLast Winner:{scoreLW}")
